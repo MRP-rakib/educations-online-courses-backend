@@ -3,7 +3,7 @@ from django.db import models
 # Create your models here.
 class Course(models.Model):
     title = models.CharField(max_length=200,blank=False,null=False)
-    image = models.ImageField(upload_to='courses_images/image/')
+    image = models.ImageField(upload_to='courses_images/image/', null=True,blank=True)
     description = models.TextField()
     price = models.IntegerField(default=0)
     total_students = models.IntegerField(default=0)

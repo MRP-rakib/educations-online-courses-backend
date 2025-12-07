@@ -5,7 +5,8 @@ from instructors.models import Instructor
 from courses.serializers import CourseSerializer,CourseCreateSerializer
 from instructors.serializer import InstructorSerializer
 from curriculum.serializer import LessonSerializer
-# Create your views here.
+from rest_framework.decorators import action
+from rest_framework.response import Response
 
 
 
@@ -24,6 +25,15 @@ class CourseViewSet(ModelViewSet):
         if self.action in ['create','update','partial_update']:
             return CourseCreateSerializer
         return CourseSerializer
+    @action(detail=True, methods=['get'])
+    def suggestions(self, request, pk=None):
+        course = self.get_object()
+        suggestions = Course.objects.filter(
+            category=course.category
+        ).exclude(id=course.id)
+
+        serializer = CourseSerializer(suggestions, many=True)
+        return Response(serializer.data)
     
 
 
