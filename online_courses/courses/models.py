@@ -10,7 +10,7 @@ class Course(models.Model):
     total_lessons = models.IntegerField(default=0)
     total_hours = models.IntegerField(default=0)
     category= models.CharField(max_length=120)
-    rating = models.IntegerField()
+    rating = models.IntegerField(blank=True, null= True)
     last_update=models.DateTimeField(auto_now=True)
 
     def __str__(self):

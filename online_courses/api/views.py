@@ -2,7 +2,7 @@ from rest_framework.viewsets import ModelViewSet
 from courses.models import Course
 from curriculum.models import Lesson
 from instructors.models import Instructor
-from courses.serializers import CourseSerializer
+from courses.serializers import CourseSerializer,CourseCreateSerializer
 from instructors.serializer import InstructorSerializer
 from curriculum.serializer import LessonSerializer
 # Create your views here.
@@ -19,7 +19,12 @@ class InstructorViewSet(ModelViewSet):
 
 class CourseViewSet(ModelViewSet):
     queryset = Course.objects.all()
-    serializer_class = CourseSerializer
+
+    def get_serializer_class(self):
+        if self.action in ['create','update','partial_update']:
+            return CourseCreateSerializer
+        return CourseSerializer
+    
 
 
 
